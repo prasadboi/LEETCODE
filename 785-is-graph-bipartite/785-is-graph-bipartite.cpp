@@ -5,7 +5,7 @@ public:
     #define vvii vector<vector<int>> 
     #define ll long long int
     
-    vi state ; // an array taht maintains coloring and state (vis or not vis) for every node 
+    vi state ; // an array that maintains coloring and state (vis or not vis) for every node 
     
     bool dfs(int src, int pns, vvii &graph) // pns = previous node state
     {
