@@ -33,20 +33,16 @@ public:
     
     
     bool possibleBipartition(int n, vector<vector<int>>& dislikes) {
-//         same as bi partite question
         graph.resize(n);
         for(auto i : dislikes){
             graph[i[0]-1].push_back(i[1]-1);
             graph[i[1] - 1].push_back(i[0] - 1);
         }
         bool flag = true;
-        // for(int i = 0; i < n; i++)
-        // {
-            state.resize(n, 0);
-            for(int i = 0; i < n; i++){
-                if(state[i] == 0) flag = flag and dfs(i, 0, graph);
+        state.resize(n, 0);
+        for(int i = 0; i < n; i++){
+            if(state[i] == 0) flag = flag and dfs(i, 0, graph);
         }
-        // }
         return flag;
     }
 };
