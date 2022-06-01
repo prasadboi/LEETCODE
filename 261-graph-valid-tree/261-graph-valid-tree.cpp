@@ -1,7 +1,6 @@
 class Solution {
 public:
-    
-#define ll long long
+    #define ll long long
 
 #define vi vector<int>
 #define vll vector<ll>
@@ -35,6 +34,9 @@ public:
 #define usetll unordered_set<ll>
 
 #define pq priority_queue
+
+// to be solved using DSU
+// return the total number of provinces (i.e. connected components)
 
 class DSU
 {
@@ -80,20 +82,18 @@ public:
     ll get_count(){return count;}
 };
     
-//------------------------------------------------------------------------------------
     
-    bool validTree(int n, vector<vector<int>>& edges) 
-    {
+    
+//     -----------------------------------------------------------------------
+    bool validTree(int n, vector<vector<int>>& edges) {
         DSU dsu(n);
         for(auto i : edges)
         {
             if(dsu.Find(i[0]) == dsu.Find(i[1])) return false;
-            else{
-                dsu.Union(i[0], i[1]);
-            }
+            else dsu.Union(i[0], i[1]);
         }
         if(dsu.get_count() == 1) return true; else return false;
     }
-//------------------------------------------------------------------------------------
+//     -----------------------------------------------------------------------
 
 };
