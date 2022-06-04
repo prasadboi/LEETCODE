@@ -48,24 +48,27 @@ public:
     vector<int> findRedundantConnection(vector<vector<int>>& edges) 
     {
         n = edges.size();
+        // NOTE : pair<x, y> can be used as a key only in map, set etc. and not in their unordered counterparts
         map<pair<int, int>, int> edgeNum;
         
         graph.resize(n); 
         for(int i = 0; i < n; i++)
         {
-            edgeNum[{edges[i][0]-1, edges[i][1]-1}] = i;
+            // store all the edges with their relative ordering information
+            edgeNum[{edges[i][0]-1, edges[i][1]-1}] = i; 
             
+            // build undirected graph
             graph[edges[i][0] - 1].push_back(edges[i][1]-1);
             graph[edges[i][1] - 1].push_back(edges[i][0]-1);
         }
         
+        // standard cycle detection and identification in a undirected graph
         vi cycle = find_cycle();
         vi res(2, -1);
-        // for(auto i : cycle) cout<<i<<" ";
-        // cout<<endl;
         int order = INT_MIN;
         
-        // here on forth it is just searching that edge in the map
+        // here on forth it is just searching that edge in the map such that 
+        // the edge that in the cycle which was entered last in the output is found
         for(int i = 0; i < cycle.size()-1; i++)
         {
             int temp;
@@ -73,7 +76,6 @@ public:
                 temp = edgeNum[{cycle[i], cycle[i+1]}];
                 if(order < temp){
                     order = temp;
-                    // cout<<"order = "<<order<<endl;
                     res[0] = cycle[i], res[1] = cycle[i+1];
                 }
             }
@@ -81,7 +83,6 @@ public:
                 temp = edgeNum[{cycle[i+1], cycle[i]}];
                 if(order < temp){
                     order = temp;
-                    // cout<<"order = "<<order<<endl; 
                     res[0] = cycle[i+1], res[1] = cycle[i];
                 }
             }
