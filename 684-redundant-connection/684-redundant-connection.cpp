@@ -61,9 +61,11 @@ public:
         
         vi cycle = find_cycle();
         vi res(2, -1);
-        for(auto i : cycle) cout<<i<<" ";
-        cout<<endl;
+        // for(auto i : cycle) cout<<i<<" ";
+        // cout<<endl;
         int order = INT_MIN;
+        
+        // here on forth it is just searching that edge in the map
         for(int i = 0; i < cycle.size()-1; i++)
         {
             int temp;
