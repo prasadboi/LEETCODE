@@ -1,63 +1,90 @@
 class Solution {
 public:
     
-    #define ll long long int
-    #define vvll vector<vector<ll>>
-    #define vvpll vector<vector<pair<ll, ll>>>
-    #define vll vector<ll>
+    #define vvii vector<vector<int>> 
     #define vi vector<int>
-    #define vb vector<bool>
-    #define vc vector<char>   
+    #define ll long long int
     
-//     -------------------------------------------------------------------------------------------------
+    vvii graph;
+    vi color, parent;
+    int n, cycle_start, cycle_end;
     
-    vvll graph;
-    vll parent;
-    vb visited;
-    unordered_set<int> cycle;
-    int cycle_start = -1, cycle_end = -1;
-    
-    bool dfs(int src)
+    bool DFS(int v, int par)
     {
-        visited[src] = true;
-        for(auto i : graph[src])
+        color[v] = 1;
+        for(auto u : graph[v])
         {
-            if(parent[src] == i) continue;
-            if(visited[i])
-            {
-                cycle_start = i;
-                cycle_end = src; 
-                return true;
+            if(u == par) continue;
+            if(color[u] == 1){
+                cycle_start = u, cycle_end = v; return true;
             }
-            parent[i] = src;
-            if(dfs(i)) return true;
+            parent[u] = v;
+            if(DFS(u, parent[u])) return true;
         }
         return false;
     }
     
-    vector<int> findRedundantConnection(vector<vector<int>>& edges) {
-        int n = edges.size();
-        graph.resize(n);
-        visited.resize(n, false);
-        parent.resize(n, -1);
-        vi ans;
-        for(auto i : edges)
+    vector<int> find_cycle()
+    {
+        color.resize(n, 0); parent.resize(n, -1);
+        cycle_start = -1, cycle_end = -1;
+        
+        for(int v = 0; v < n; v++)
+            if(color[v] == 0 and DFS(v, parent[v])) break;
+        
+        vi cycle;
+        if(cycle_start == -1) return cycle;
+        else
         {
-            graph[i[1]-1].push_back(i[0]-1);
-            graph[i[0]-1].push_back(i[1]-1);
+            cycle.push_back(cycle_start);
+            for(int v = cycle_end; v != cycle_start; v = parent[v])
+                cycle.push_back(v);
+            cycle.push_back(cycle_start);
+            reverse(cycle.begin(), cycle.end());
+            return cycle;
         }
-        if(dfs(0)){
-            for(int u = cycle_end; u != cycle_start; u = parent[u])
-            {
-                cycle.insert(u);
-            }
-            cycle.insert(cycle_start);
+    }
+    
+    vector<int> findRedundantConnection(vector<vector<int>>& edges) 
+    {
+        n = edges.size();
+        map<pair<int, int>, int> edgeNum;
+        
+        graph.resize(n); 
+        for(int i = 0; i < n; i++)
+        {
+            edgeNum[{edges[i][0]-1, edges[i][1]-1}] = i;
             
-            for(int i = n-1; i > -1; i--)
-            {
-                if(cycle.count(edges[i][0]-1)and cycle.count(edges[i][1]-1)){ans = edges[i]; break;}
+            graph[edges[i][0] - 1].push_back(edges[i][1]-1);
+            graph[edges[i][1] - 1].push_back(edges[i][0]-1);
+        }
+        
+        vi cycle = find_cycle();
+        vi res(2, -1);
+        for(auto i : cycle) cout<<i<<" ";
+        cout<<endl;
+        int order = INT_MIN;
+        for(int i = 0; i < cycle.size()-1; i++)
+        {
+            int temp;
+            if(edgeNum.find({cycle[i], cycle[i+1]}) != edgeNum.end()){
+                temp = edgeNum[{cycle[i], cycle[i+1]}];
+                if(order < temp){
+                    order = temp;
+                    // cout<<"order = "<<order<<endl;
+                    res[0] = cycle[i], res[1] = cycle[i+1];
+                }
+            }
+            else{
+                temp = edgeNum[{cycle[i+1], cycle[i]}];
+                if(order < temp){
+                    order = temp;
+                    // cout<<"order = "<<order<<endl; 
+                    res[0] = cycle[i+1], res[1] = cycle[i];
+                }
             }
         }
-        return ans;
+        res[0]++, res[1]++;
+        return res;
     }
 };
