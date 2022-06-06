@@ -1,6 +1,6 @@
 class Solution {
 public:
-    
+//     ------------------------------------------------------------------------------------------------------------------
 //     via dfs
     
     // void dfs(int s, int d, vector<vector<int>> &ans, vector<int> path, vector<bool> visited, vector<vector<int>> &graph)
@@ -14,7 +14,7 @@ public:
     //     }
     //     visited[s] = false;
     // }
-    
+//     ------------------------------------------------------------------------------------------------------------------
 //     via bfs
     
     void bfs(int src, int dest, vector<vector<int>> &ans, vector<int> path, vector<bool> visited, vector<vector<int>> &graph)
@@ -42,8 +42,7 @@ public:
             }
         }
     }
-    
-    
+ //     ----------------------------------------------------------------------------------------------------------------- 
     vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) 
     {
         vector<vector<int>> ans;
