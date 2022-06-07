@@ -7,13 +7,11 @@ public:
         while(l + 1 < r)
         {
             ll m = l + (r-l)/2;
-            // cout<<"m = "<<m<<", l = "<<l<<", r = "<<r<<endl;
             // in case we dont know where to go simply shorten the search space
             if(nums[m] == nums[l] and nums[m] == nums[r]){l++; r--;}
             else if(nums[(n + m-1)%n] > nums[m] and nums[m] < nums[(m+1)%n]) return nums[m];
             else if(nums[m] > nums[r]) l = m;
             else r = m;
-            // cout<<"m = "<<m<<", l = "<<l<<", r = "<<r<<endl<<endl;
         }
         
         if(nums[l] <= nums[(l+1)%n] and nums[l] <= nums[(n+l-1)%n]) return nums[l];
