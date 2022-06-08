@@ -18,14 +18,13 @@ public:
         while(l < r)
         {
             ll m = l + (r-l)/2;
-            cout<<"l = "<<l<<", m = "<<m<<", r = "<<r<<endl;
+            // cout<<"l = "<<l<<", m = "<<m<<", r = "<<r<<endl;
             if(misses(m, nums) < k and misses((m+1), nums) >= k)
             {
                 return nums[m] + (k - misses(m, nums));
             }
             else if(misses(m, nums) < k) l = m + 1;
             else r = m;
-            cout<<"l = "<<l<<", m = "<<m<<", r = "<<r<<endl<<"----------------"<<endl;
         }
         return -1;
     }
