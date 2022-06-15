@@ -31,6 +31,8 @@ public:
             {if(--indegree[v] == 0) {q.push(v);}}
             ctr++;
         }
+        // if ctr < n then that means that somewhere we must have encountered a cycle
+        // hence that case would be invalid
         if(ctr != n) return false; else return true;
     }
 };
