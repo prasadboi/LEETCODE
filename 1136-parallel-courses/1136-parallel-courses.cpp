@@ -24,7 +24,6 @@ public:
         while(!q.empty())
         {
             int k = q.size();
-            // cout<<"k = "<<k<<", sem = "<<sem<<endl;
             for(int i = 0; i < k; i++)
             {
                 ll u = q.front(); q.pop();
