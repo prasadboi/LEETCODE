@@ -1,31 +1,36 @@
 class Solution {
 public:
+    #define ll long long int
+    #define vll vector<ll>
+    #define vvll vector<vll>
     #define vb vector<bool>
-    #define vvii vector<vector<int>>
     #define vi vector<int>
-   bool iscycle(vector<int> adj[],vector<int> &vis,int id){
-        if(vis[id]==1)
-            return true;
-        if(vis[id]==0){
-            vis[id]=1;
-            for(auto edge : adj[id]){
-                if(iscycle(adj,vis,edge))
-                    return true;
-            }
+    
+    bool canFinish(int num, vector<vector<int>>& prerequisites) 
+    {
+        ll n = num;
+        vvll graph(n); vll outdegree(n, 0), indegree(n, 0);
+        for(auto i : prerequisites){
+            graph[i[0]].push_back(i[1]);
+            indegree[i[1]]++, outdegree[i[0]]++;
         }
-        vis[id] = 2;
-        return false;
-    }
-    bool canFinish(int n, vector<vector<int>>& pre) {
-        vector<int> adj[n];
-        for(auto edge : pre)
-            adj[edge[1]].push_back(edge[0]);
-        vector<int> vis(n,0);
         
-        for(int i=0;i<n;i++){
-            if(iscycle(adj,vis,i))
-                return false;
+        // Kahn's algorithm
+        // find the start nodes
+        queue<int> q;
+        ll ctr = 0;
+        for(ll i = 0; i < n; i++){
+            if(indegree[i] == 0){q.push(i);}
         }
-        return true;
+        
+        while(!q.empty())
+        {
+            ll u = q.front();
+            q.pop();
+            for(auto v : graph[u])
+            {if(--indegree[v] == 0) {q.push(v);}}
+            ctr++;
+        }
+        if(ctr != n) return false; else return true;
     }
 };
