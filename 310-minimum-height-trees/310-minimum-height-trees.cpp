@@ -1,100 +1,38 @@
 class Solution {
 public:
-    #define vvll vector<vector<long long int>>
-    #define vb vector<bool>
-    #define vll vector<long long int>
-    #define vi vector<int>
     #define ll long long int
+    #define vll vector<ll>
+    #define vvll vector<vll>
+    #define vb vector<bool>
+    #define vi vector<int>
     
-    // ll get_height(int src, vb &vis, vvll &graph)
-    // {
-    //     vis[src] = true;
-    //     if(graph[src].size() == 0) return 0;
-    //     ll res = 0;
-    //     for(auto i : graph[src])
-    //     {
-    //         if(!vis[i])
-    //         {
-    //             res = max(res, get_height(i, vis, graph) + 1);
-    //         }
-    //     }
-    //     return res;
-    // }
-    
-    vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
+    vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) 
+    {
         vvll graph(n);
-        vll indegree(n, 0);
-        for(auto i : edges){
-            graph[i[0]].push_back(i[1]);
-            graph[i[1]].push_back(i[0]);
-            indegree[i[0]]++;
-            indegree[i[1]]++;
+        vll degree(n, 0);
+        for(auto i : edges)
+        {
+            graph[i[0]].push_back(i[1]); graph[i[1]].push_back(i[0]); 
+            degree[i[1]]++; degree[i[0]]++;
         }
-        vi ans;
         
-        
-        
-        
-//         O(N^2) solution:
-        
-//         ll minH = INT_MAX;
-//         for(int i = 0; i < n; i++){
-//             vb vis(n, false);
-//             ll h = get_height(i,vis, graph);
-//             if(minH > h){
-//                 ans.clear();
-//                 minH = h;
-//             }
-//             if(minH == h){
-//                 ans.push_back(i);
-//             }
-//         }
-        
-//         return ans;
-        
-        
-        
-        
-        
-        
-        
-        // O(N) solution
-        
-        // note : the number of said "centroids" for a tree like graph is no more than 2
-        
-        // implementing topSort via BFS/levelOrderTraversal
-        
-        queue<ll> q;
-        for(int i = 0; i < n; i++){
-            if(indegree[i] == 1){
-                indegree[i]--;
-                q.push(i);
+        queue<int> q;
+        int nodes_left = n;
+        for(int i = 0; i < n; i++) if(--degree[i] == 0) q.push(i);
+        while(q.size() and nodes_left > 2)
+        {
+            int sz = q.size();
+            for(int t = 0; t < sz; t++)
+            {
+                int u = q.front(); q.pop();
+                for(auto v : graph[u])
+                    if(--degree[v] == 0) q.push(v);
             }
+            nodes_left -= sz;
         }
-//         that level which is inner most must be the nodes which are closest to all other nodes (on avg)
-//         like a level order traversal i'm going level by level deeper into the tree
-//         to do that i maintain an indegree vector which i keep updating. indegree[i] == 1 next inner layer
-        while(!q.empty()){
-            int s = q.size();
-            ans.clear();
-            for(int i=0; i<s;i++){
-                int curr = q.front(); 
-                indegree[curr]--;
-                q.pop();
-                ans.push_back(curr);
-                for(auto child : graph[curr]){
-                    //For each node, attached to the leaf nodes, 
-                    // we decrement the indegree i.e remove the leaf nodes connected to them. 
-                    // We keep on doing this until we reach the middle nodes.
-                    if(indegree[child]){
-                        indegree[child]--;
-                        if(indegree[child]==1) q.push(child);  
-                    }
-                }
-            }
-        }
-        if(n==1) ans.push_back(0); //If there is only 1 node in the graph, the min height is 0, with root being '0'
-        return ans;
-        
+        vi res;
+        if(n == 1) return {0};
+        while(q.size()){res.push_back(q.front()); q.pop();}
+        return res;
     }
 };
