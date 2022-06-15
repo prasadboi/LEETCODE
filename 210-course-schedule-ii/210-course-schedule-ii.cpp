@@ -1,32 +1,37 @@
 class Solution {
 public:
-    #define vvll vector<vector<long long int>>
+    #define ll long long int
+    #define vll vector<ll>
+    #define vvll vector<vll>
+    #define vb vector<bool>
     #define vi vector<int>
-    void dfs(int src, vvll &graph, vi &ans, vi &indegree)
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) 
     {
-    ans.push_back(src);
-    indegree[src] = -1;
-    for(auto i : graph[src])
-    {
-        indegree[i]--;
-        if(indegree[i] == 0) dfs(i, graph, ans, indegree);
-    }
-    }
-    
-    
-    vector<int> findOrder(int n, vector<vector<int>>& Prereqs) {
-    vvll graph(n);
-    vi indegree(n,0), ans;
-    for(auto i : Prereqs)
-    {
-        graph[i[1]].push_back(i[0]);
-        indegree[i[0]]++;
-    }
-
-    for(int i = 0; i < n; i++)
-    {
-        if(indegree[i] == 0) dfs(i, graph, ans, indegree);
-    }
-    if(ans.size() == n) return ans; else return {};
+        ll n = numCourses;
+        
+        // gen graph
+        vvll graph(n);
+        vll indegree(n, 0);
+        for(auto i : prerequisites)
+        {
+            graph[i[0]].push_back(i[1]);
+            indegree[i[1]]++;
+        }
+        
+        // Kahn's algorithm
+        queue<ll> q;
+        vi topOrder; 
+        ll ctr = 0;
+        for(int i = 0; i < n; i++)
+            if(indegree[i] == 0) q.push(i);
+        while(!q.empty())
+        {
+            ll u = q.front(); q.pop();
+            topOrder.insert(topOrder.begin(), (int)u);
+            for(auto v : graph[u])
+                if(--indegree[v] == 0) q.push(v);
+            ctr++;
+        }
+        if(ctr != n) return {}; else return topOrder;
     }
 };
