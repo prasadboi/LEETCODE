@@ -9,7 +9,10 @@ public:
     bool canFinish(int num, vector<vector<int>>& prerequisites) 
     {
         ll n = num;
-        vvll graph(n); vll outdegree(n, 0), indegree(n, 0);
+        vvll graph(n); 
+        vll outdegree(n, 0), indegree(n, 0);
+        
+        // create graph
         for(auto i : prerequisites){
             graph[i[0]].push_back(i[1]);
             indegree[i[1]]++, outdegree[i[0]]++;
