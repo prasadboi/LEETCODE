@@ -8,12 +8,9 @@ public:
     vector<int> minAvailableDuration(vector<vector<int>>& slots1, vector<vector<int>>& slots2, int duration)
     {
         if(!slots1.size() or !slots2.size()) return {};
+        
         sort(slots1.begin(), slots1.end(), cmp);
         sort(slots2.begin(), slots2.end(), cmp);
-        
-        // for(auto i : slots1) cout<<i[0]<<"-"<<i[1]<<" "; cout<<endl;
-        // for(auto i : slots2) cout<<i[0]<<"-"<<i[1]<<" "; cout<<endl;
-        
         int s1 = 0, s2 = 0;
         for(; s1 < slots1.size() and s2 < slots2.size();)
         {
