@@ -22,20 +22,14 @@ public:
         vpll res;
         ll x = u.first, y = u.second;
         ll nx = maze.size(), ny = maze[0].size();
-        // cout<<"pushing : ";
         int t = x;
         while(t > -1 and maze[t][y] != 1) t--; res.push_back({t+1, y});
-        // cout<<t+1<<" - "<<y<<"||";
         t = x;
         while(t < nx and maze[t][y] == 0) t++; res.push_back({t-1, y});
-        // cout<<t-1<<" - "<<y<<"||";
         t = y;
         while(t > -1 and maze[x][t] == 0) t--; res.push_back({x, t+1});
-        // cout<<x<<" - "<<t+1<<"||";
         t = y;
         while(t < ny and maze[x][t] == 0) t++; res.push_back({x, t-1});
-        // cout<<x<<" - "<<t-1<<"||";
-        // cout<<endl;
         return res;
     }
     
@@ -52,7 +46,6 @@ public:
         {
             ll ux = q.front().first, uy = q.front().second; 
             q.pop();
-            // cout<<"ux = "<<ux<<", uy = "<<uy<<", ud = "<<dist[ux][uy]<<endl;
             for(auto v : get_nghbrs({ux, uy}, maze))
             {
                 ll vx = v.first, vy = v.second;
