@@ -11,24 +11,23 @@ public:
         ll n = color.size();
         if(n == 0) return 0;
         if(edges.size() == 0) return 1;
+        
+        
         vvll graph(n);
         vll indegree(n, 0);
-        
         for(auto i : edges){
             graph[i[0]].push_back(i[1]); 
             indegree[i[1]]++;
         }
         
-        vvll dp(n, vll (26, 0));
         
-        // running bfs while maintaining color freq at every node
+        vvll dp(n, vll (26, 0));
+        // running top sort while maintaining color freq at every node
         queue<ll> q;
         ll res = -1;
         
         ll src = 0, ctr = 0;
         for(int i = 0; i < n; i++) if(indegree[i] == 0){q.push(i); dp[i][color[i] - 'a'] = 1;}
-        // for(auto i : indegree) cout<<i<<" "; cout<<endl;
-        // for(auto i : dp[src]) cout<<i<<" "; cout<<endl;
         while(!q.empty())
         {
             ll u = q.front(); q.pop();
@@ -44,11 +43,9 @@ public:
             }
             ctr++;
         }
-        // cout<<"-----------------------------------\n";
         if(ctr != n) return -1;
         else return res;
     }
-    //------------------------------------------------------------
 };
 
 
