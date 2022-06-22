@@ -69,19 +69,20 @@ public:
     
         // Store emails corresponding to the component's representative
         unordered_map<int, vector<string>> components;
-        for (auto emailIterator : emailGroup) {
-            string email = emailIterator.first;
-            int group = emailIterator.second;
+        for (auto e : emailGroup) {
+            string email = e.first;
+            int group = e.second;
             components[dsu.FIND(group)].push_back(email);
         }
 
         // Sort the components and add the account name
         vector<vector<string>> mergedAccounts;
-        for (auto componentIterator : components) {
-            int group = componentIterator.first;
+        for (auto i : components) 
+        {
+            int group = i.first;
             vector<string> component = {accountList[group][0]};
-            component.insert(component.end(), componentIterator.second.begin(), 
-                                              componentIterator.second.end()
+            component.insert(component.end(), i.second.begin(), 
+                                              i.second.end()
                             );
             sort(component.begin() + 1, component.end());
             mergedAccounts.push_back(component);
