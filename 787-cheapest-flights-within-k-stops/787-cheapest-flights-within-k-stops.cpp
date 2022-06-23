@@ -40,9 +40,10 @@ public:
         vvpll graph(n);
         for(auto i : flights) graph[i[0]].push_back({i[1], i[2]});
         
-        // auto cmp = [](const vll &a, const vll &b){return a[0] <= b[0];};
-        // set<vll, decltype(cmp)> q(cmp);
-        set<vll> q;
+        auto cmp = [](const vll &a, const vll &b){return a < b;};
+        set<vll, decltype(cmp)> q(cmp);
+        
+        // set<vll> q;
         q.insert({0, 0, src}); // {dist, number of stops, node}
         while(!q.empty())
         {
