@@ -23,13 +23,11 @@ public:
         while(!s.empty())
         {
             TreeNode* i = s.top();
-            cout<<"i is "<<i->val<<endl;
             if(i->left and lflag == false){
                 while(i->left){s.push(i->left); i = i->left;}
             }
             else{
                 lflag = true;
-                cout<<"i pushed is "<<i->val<<endl;
                 res.push_back(i->val);
                 s.pop();
                 if(i->right != NULL){s.push(i->right); lflag = false;}
