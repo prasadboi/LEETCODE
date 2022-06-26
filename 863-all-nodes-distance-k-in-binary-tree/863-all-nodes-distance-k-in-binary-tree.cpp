@@ -16,9 +16,7 @@ public:
     {
         if(root == NULL) {return;}
         vis[root] = true;
-        // cout<<"at node : "<<root->val<<endl;
         if(k == 0){
-            // cout<<"adding result : "<<root->val<<endl;
             res.push_back(root->val);
         }
         
@@ -49,7 +47,6 @@ public:
             }
         }
         disK(target, k, res);
-        // if(res.size() and res[res.size()-1] == -1)res.pop_back();
         return res;
     }
 };
