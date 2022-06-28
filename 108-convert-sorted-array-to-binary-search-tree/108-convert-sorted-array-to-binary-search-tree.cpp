@@ -17,11 +17,13 @@ public:
         if(l == r) return NULL;
         int mid = l + (r-l)/2;
         TreeNode* root = new TreeNode(nums[mid]);
-        // cout<<"making node = "<<nums[mid]<<endl;
+        
         vector<int> nums_l(nums.begin(), nums.begin() + mid);
         vector<int> nums_r(nums.begin() + mid + 1, nums.end());
+        
         root->left = sortedArrayToBST(nums_l);
         root->right = sortedArrayToBST(nums_r);
+        
         return root;
     }
 };
