@@ -25,17 +25,17 @@ public:
     void dfs(Node* node, Node* copy, vector<bool> &visited)
     {
         visited[node->val] = true;
-        newNodeList[node->val] = (copy);
+        newNodeList[node->val] = copy;
         
         for(auto i : node->neighbors)
         {
             Node* newNode = new Node(i->val);
             if(visited[i->val]){
-                (copy)->neighbors.push_back(newNodeList[i->val]);
+                copy->neighbors.push_back(newNodeList[i->val]);
             }
             else
             {
-                (copy)->neighbors.push_back(newNode);
+                copy->neighbors.push_back(newNode);
                 dfs(i, newNode, visited);
             }
         }
