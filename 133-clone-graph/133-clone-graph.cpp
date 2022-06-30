@@ -22,21 +22,21 @@ public:
 class Solution {
 public:
     unordered_map<int, Node*> newNodeList;
-    void dfs(Node* node, Node** copy, vector<bool> &visited)
+    void dfs(Node* node, Node* copy, vector<bool> &visited)
     {
         visited[node->val] = true;
-        newNodeList[node->val] = (*copy);
+        newNodeList[node->val] = (copy);
         
         for(auto i : node->neighbors)
         {
             Node* newNode = new Node(i->val);
             if(visited[i->val]){
-                (*copy)->neighbors.push_back(newNodeList[i->val]);
+                (copy)->neighbors.push_back(newNodeList[i->val]);
             }
             else
             {
-                (*copy)->neighbors.push_back(newNode);
-                dfs(i, &newNode, visited);
+                (copy)->neighbors.push_back(newNode);
+                dfs(i, newNode, visited);
             }
         }
     }
@@ -46,7 +46,7 @@ public:
         if(node == NULL) return NULL;
         Node* newGraphHead = new Node(node->val);
         vector<bool> visited(100, false);
-        dfs(node, &newGraphHead, visited);
+        dfs(node, newGraphHead, visited);
         return newGraphHead;
     }
 };
