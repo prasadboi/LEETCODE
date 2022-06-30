@@ -9,24 +9,25 @@ public:
     #define vb vector<bool>
     #define INF (1e9 + 7)
     
-    vll dp, last;
+    vll dp, in , out;
     vvll graph;
-    int dfs(vector<int>& nums, ll i, ll parent, ll &ids) 
+    ll time = 0;
+    
+    ll dfs(vi & nums, ll i, ll parent) 
     {
-        ll id = ids++, res = nums[i];
+        in[i] = time++;
+        ll res = nums[i];
         for (auto j : graph[i])
             if (j != parent)
-                res ^= dfs(nums, j, i, ids);
-        last[id] = ids;
-        return dp[id] = res;    
+                res ^= dfs(nums, j, i);
+        out[i] = time++;
+        return dp[i] = res;    
     }
 
     int minimumScore(vector<int>& nums, vector<vector<int>>& edges)
     {
-        ll ids = 0, res = INT_MAX;
-        ll n = nums.size();
-        dp.resize(n, 0);
-        last.resize(n);
+        ll n = nums.size(), res = INF;
+        dp.resize(n, 0); in.resize(n, 0); out.resize(n, 0);
         graph.resize(n);
         
         for (auto &e :  edges) {
@@ -34,15 +35,23 @@ public:
             graph[e[1]].push_back(e[0]);
         }
         
-        int all = dfs(nums, 0, -1, ids);
+        ll all = dfs(nums, 0, -1);
         
-        // this last[] implementation is new to me
-        for (int i = 1; i < n; ++i)
-            for (int j = i + 1; j < n; ++j) {
-                ll p1 = j < last[i] ? all ^ dp[i] : all ^ dp[i] ^ dp[j];
-                ll p2 = j < last[i] ? dp[i] ^ dp[j] : dp[i];
-                res = min(res, max({p1, p2, dp[j]}) - min({p1, p2, dp[j]}));
+        for(int i = 1; i < n; i++){
+            for(int j = 1; j < n; j++)
+            {
+                if(i == j) continue;
+                ll tree1 = INF, tree2 = INF, tree3 = INF;
+                if(in[i] < in[j] and out[i] > out[j])
+                    tree1 = dp[j], tree2 = dp[i]^dp[j], tree3 = all^dp[i];
+                else if(in[i] > in[j] and out[i] < out[j])
+                    tree1 = dp[i], tree2 = dp[j]^dp[i], tree3 = all^dp[j];
+                else
+                    tree1 = dp[i], tree2 = dp[j], tree3 = all^dp[i]^dp[j];
+                
+                res = min(res, max({tree1, tree2, tree3}) - min({tree1, tree2, tree3}));
             }
+        }
         return res;
     }
 };
