@@ -68,8 +68,8 @@ ll bottom_up(ll n, vi arr, umapll freq)
 
         ll maxi = INT_MIN;
         for(auto i : nums) {freq[i]++; maxi = max(maxi, (ll)i);}
-        return (int)top_down(maxi, nums);
         
+        // return (int)top_down(maxi, nums);
         return (int) bottom_up(maxi, nums, freq);
     }
 };
