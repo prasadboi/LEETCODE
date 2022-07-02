@@ -41,7 +41,7 @@ ll top_down(ll n, vi arr, umapll freq){
     if(n == 1) return freq[1]*1;
     // MEMO
     if(dp_mem.find(n) != dp_mem.end()) return dp_mem[n];
-    if(freq.find(n) != freq.end())
+    if(freq.find(n) != freq.end() and freq[n] > 0)
         dp_mem[n] = max(top_down(n-1, arr, freq), top_down(n-2, arr, freq) + n*freq[n]);
     else dp_mem[n] = top_down(n-1,arr, freq);
     
@@ -69,6 +69,8 @@ ll bottom_up(ll n, vi arr, umapll freq)
         ll maxi = INT_MIN;
         for(auto i : nums) {freq[i]++; maxi = max(maxi, (ll)i);}
         // return (int)top_down(maxi, nums, freq);
+        // need to make more than usual optimizations to do recursive dp (top-down ie).
+        
         return (int) bottom_up(maxi, nums, freq);
     }
 };
