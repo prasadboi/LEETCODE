@@ -47,7 +47,21 @@ ll top_down(ll i, vi arr)
     return dp_mem[i] = max(top_down(i-1, arr), arr[i] + top_down(i-2, arr));
 }
 // -------------------------------------------------------------------------------------
-    int rob(vector<int>& nums) {
-        return (int)top_down(nums.size()-1, nums);
+ll bottom_up(ll n, vi arr)
+{
+    vll dp_tab(n, 0);
+    // BASE CASES:
+    if(n == 0) return 0;
+    dp_tab[0] = arr[0]; if(n == 1) return dp_tab[0]; 
+    dp_tab[1] = max(arr[0], arr[1]);
+    // Ordering is going from base cases to i = n-1 in increment fashion
+    for(int i = 2; i < n; i++) dp_tab[i] = max(dp_tab[i-1], dp_tab[i-2] + arr[i]);
+    return dp_tab[n-1];
+}
+// -------------------------------------------------------------------------------------   
+    
+int rob(vector<int>& nums) {
+        return (int) bottom_up(nums.size(), nums);
+        // return (int)top_down(nums.size()-1, nums);
     }
 };
