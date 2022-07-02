@@ -52,6 +52,22 @@ public:
     }
 //     -------------------------------------------------------------------------------------------------------------
 //     -------------------------------------------------------------------------------------------------------------
+    ll bottom_up(ll m, ll n, vvll &mat)
+    {
+        for(auto i = 0; i < m; i++) {dp_mem[i][0] = mat[i][0];res = max(dp_mem[i][0], res);}
+        for(auto j = 0; j < n; j++) {dp_mem[0][j] = mat[0][j];res = max(dp_mem[0][j], res);}
+
+        for(auto i = 1; i < m; i++){
+            for(auto j = 1; j < n; j++){
+                if(mat[i][j] == 1) dp_mem[i][j] = min({dp_mem[i-1][j], dp_mem[i-1][j-1], dp_mem[i][j-1]}) + 1;
+                else dp_mem[i][j] = 0;
+                res = max(res, dp_mem[i][j]);
+            }
+        }
+        return res;
+    }
+//     -------------------------------------------------------------------------------------------------------------
+//     -------------------------------------------------------------------------------------------------------------
     int maximalSquare(vector<vector<char>>& matrix) {
         ll m = matrix.size();
         if(m == 0) return 0;
@@ -62,8 +78,10 @@ public:
         dp_mem.resize(m, vll(n, -1));
         
         for(auto i = 0; i < m; i++) for(auto j = 0; j < n; j++) mat[i][j] = matrix[i][j] - '0';
-        for(auto i = 0; i < m; i++) for(auto j = 0; j < n; j++) res = max(res, top_down(i, j, mat));
-        return (int)res*res;
+        
+        // for(auto i = 0; i < m; i++) for(auto j = 0; j < n; j++) res = max(res, top_down(i, j, mat));
+        res = max(res, bottom_up(m, n, mat));
+        return (int) res*res;
     }
 //     -------------------------------------------------------------------------------------------------------------
 //     -------------------------------------------------------------------------------------------------------------
