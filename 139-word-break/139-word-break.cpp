@@ -9,7 +9,8 @@ public:
     #define vb vector<bool>
     #define umapi_i unordered_map<int, int>
     #define umapll_ll unordered_map<ll, ll>
-    
+    //------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------
     unordered_map<ll, bool> dp_mem;
     bool top_down(ll i, string &s, vector<string> &words){
         if(i == -1) return true;
@@ -22,8 +23,26 @@ public:
         }
         return dp_mem[i] = res;
     }
-    
-    bool wordBreak(string s, vector<string>& words){
-        return top_down(s.size() - 1, s, words);
+    //------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------
+    bool bottom_up(string &s, vector<string> &words){
+        vb dp(s.size() + 1, false);
+        dp[0] = true;
+        for(auto i = 0; i <= s.size(); i++){
+            for(auto word : words){
+                string temp = "";
+                if(word.size() <= i) temp = s.substr(i - word.size(), word.size());
+                if(temp == word) dp[i] = dp[i] or dp[i - word.size()];
+            }
+        }
+        return dp[s.size()];
     }
+    //------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------
+    bool wordBreak(string s, vector<string>& words){
+        // return top_down(s.size() - 1, s, words);
+        return bottom_up(s, words);
+    }
+    //------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------
 };
