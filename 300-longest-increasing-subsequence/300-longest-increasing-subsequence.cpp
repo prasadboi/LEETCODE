@@ -21,11 +21,26 @@ public:
         return dp_mem[i] = res;
     }
     
+    ll bottom_up(vi &arr)
+    {
+        vll dp(arr.size()+1, 1);
+        dp[0] = 0;
+        ll ans = 1;
+        for(auto i = 1; i <= arr.size(); i++){
+            for(auto j = 1; j < i; j++){
+                if(arr[j-1] < arr[i-1]) dp[i] = max(dp[j]+1, dp[i]);
+            }
+            ans = max(ans, dp[i]);
+        }
+        return ans;
+    }
+    
     int lengthOfLIS(vector<int>& arr) 
     {
-        ans= 1 ;
-        for(auto i = 0; i < arr.size(); i++)
-            ans = max(ans, top_down(i, arr));
-        return ans;
+        // ans= 1 ;
+        // for(auto i = 0; i < arr.size(); i++)
+        //     ans = max(ans, top_down(i, arr));
+        // return ans;
+        return bottom_up(arr);
     }
 };
