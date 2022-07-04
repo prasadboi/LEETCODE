@@ -45,7 +45,7 @@ ll top_down(int target, vi &denom)
 }
 //-----------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------
-ll bottom_up_opti(int target, vi &denom)
+ll bottom_up(int target, vi &denom)
 {
     vll dp(target+1, INF);
 
@@ -61,8 +61,8 @@ ll bottom_up_opti(int target, vi &denom)
 //-----------------------------------------------------------------------------------------
     int coinChange(vector<int>& coins, int amount) {
         ll res = top_down(amount, coins);
-        return ((res >= INF)?-1 : res);
-        // return (int)bottom_up_opti(amount, coins);
+        // return ((res >= INF)?-1 : res);
+        return (int)bottom_up(amount, coins);
     }
 //-----------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------
