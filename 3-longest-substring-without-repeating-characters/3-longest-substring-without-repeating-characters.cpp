@@ -6,9 +6,10 @@ public:
     
     int lengthOfLongestSubstring(string s) {
         ll l = 0, r = 1, n = s.size();
+        vll count(256, 0);
+
         if(n == 0) return 0;
         ll res = 1;
-        vll count(256, 0);
         count[s[0]]++;
         while(l < n and r < n){
             count[s[r]]++;
