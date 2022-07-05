@@ -6,7 +6,9 @@ public:
     #define umapi_i unordered_map<int, int>
     #define umapi_umapi_i unordered_map<int, umapi_i>
     #define umapi_umapi_umapi_i unordered_map<int, umapi_umapi_i>
-    
+
+//-----------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------
     umapi_umapi_umapi_i dp;
     int top_down(ll i, ll rem_transactions, ll hold_stock, ll k, vi &prices)
     {
@@ -20,7 +22,8 @@ public:
         else // if you dont have any stock on day i, you can buy the stock on day i or do nothing
             return dp[i][rem_transactions][hold_stock] = (int)max(top_down(i+1, rem_transactions, 0, k, prices), top_down(i+1, rem_transactions, 1, k, prices) - prices[i]);
     }
-    
+//-----------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------  
     int bottom_up(ll k, vi &prices)
     {
         ll n = prices.size();
@@ -35,8 +38,9 @@ public:
         }
         return (int)dp[0][k][0];
     }
-    
-    int maxProfit(int k, vector<int>& prices) 
+//-----------------------------------------------------------------------------------------------------------------    
+//-----------------------------------------------------------------------------------------------------------------
+int maxProfit(int k, vector<int>& prices) 
     {
         // find max profit you can achieve using atmost k transcations
         
@@ -53,4 +57,7 @@ public:
         // return (int)top_down(0, (ll)k, 0, (ll)k, prices);
         return bottom_up((ll)k, prices);
     }
+//-----------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------
+
 };
