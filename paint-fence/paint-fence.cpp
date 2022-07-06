@@ -45,8 +45,19 @@ ll top_down(ll n,  ll k)
     return dp[n] = (k-1)*top_down(n-1, k) /*different color from previous*/ +  
                    (k-1)*top_down(n-2, k)/*same color as previous*/;
 }
+
+ll bottom_up(ll n, ll k)
+{
+    vll dp(n+1, 0);
+    dp[0] = 0;
+    if(n >= 1) dp[1] = k;
+    if(n >= 2) dp[2] = k*k;
+    for(auto i = 3; i <= n; i++) dp[i] = (k-1)*dp[i-1] + (k-1)*dp[i-2];
+    return dp[n];
+}
     
     int numWays(int n, int k) {
-        return (int) top_down((ll)n, (ll)k);
+        // return (int) top_down((ll)n, (ll)k);
+        return (int) bottom_up((ll)n, (ll)k);
     }
 };
