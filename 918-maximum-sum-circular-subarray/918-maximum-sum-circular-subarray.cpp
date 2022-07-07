@@ -8,7 +8,9 @@ class Solution {
             A[i] = -A[i];
         }
               
-        int circularSum = totalSum + kadaneMaxSum(A);
+        int circularSum = totalSum + 
+            /*arr[0...i] + arr[j...n-1] = S - minSubarraySum(A)*/
+            kadaneMaxSum(A); // it's insane honestly
         if(circularSum == 0)
             return nonCircularSum;
         return max(circularSum,nonCircularSum);
