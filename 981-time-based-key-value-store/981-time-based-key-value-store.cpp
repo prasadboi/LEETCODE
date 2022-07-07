@@ -14,7 +14,8 @@ public:
         auto it = M[key].lower_bound(timestamp);
         if(it->first == timestamp) return it->second;
         else{
-            if(it != M[key].begin()){--it; return it->second;}
+            // *it = {timestamp, value};
+            if(it != M[key].begin()){--it; return (*it).second;}
             else return "";
         }
     }
