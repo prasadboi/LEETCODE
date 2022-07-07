@@ -5,7 +5,7 @@ public:
     #define INF (1e9+7)
     #define vb vector<bool>
     
-    void permute(int i, vi temp, vvi &res, vb vis, vi &arr){
+    void permute(int i, vi &temp, vvi &res, vb &vis, vi &arr){
         if(i == arr.size()){res.push_back(temp); return;}
         for(auto j = 0; j < arr.size(); j++){
             if(vis[j]) continue;
