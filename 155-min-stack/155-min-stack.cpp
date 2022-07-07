@@ -1,19 +1,18 @@
 class MinStack {
     stack<int> s;
-    deque<int> q;
+    stack<int> mins;
 public:
     MinStack() {
     }
     
     void push(int val) {
-        if(q.empty() or q.front() >= val) q.push_front(val);
-        else q.push_back(val);
+        if(mins.empty() or val <= mins.top()) mins.push(val);
         s.push(val);
     }
     
     void pop() {
         if(s.empty()) return;
-        if(q.front() == s.top()) q.pop_front();
+        if(mins.top() == s.top()) mins.pop();
         s.pop();  
     }
     
@@ -23,10 +22,10 @@ public:
     
     int getMin() 
     {
-        cout<<"getting Min : "<<endl;
-        if(q.empty()){cout<<"empty\n"; return INT_MAX;}
-        cout<<q.front()<<endl;
-        return q.front();
+        // cout<<"getting Min : "<<endl;
+        if(mins.empty()){cout<<"empty\n"; return INT_MAX;}
+        // cout<<mins.top()<<endl;
+        return mins.top();
     }
 };
 
