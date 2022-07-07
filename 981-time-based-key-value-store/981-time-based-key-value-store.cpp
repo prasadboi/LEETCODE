@@ -1,6 +1,6 @@
 class TimeMap {
 public:
-    map<string, map<int, string, std::greater<int>>> M;
+    map<string, map<int, string>> M;
     TimeMap() {
         M.clear();
     }
@@ -12,9 +12,11 @@ public:
     string get(string key, int timestamp) {
         if(M.find(key) == M.end()) return "";
         auto it = M[key].lower_bound(timestamp);
-        if(it != M[key].end()) return it->second;
-        else return "";
-        
+        if(it->first == timestamp) return it->second;
+        else{
+            if(it != M[key].begin()){--it; return it->second;}
+            else return "";
+        }
     }
 };
 
