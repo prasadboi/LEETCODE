@@ -36,23 +36,37 @@ public:
 #define pq priority_queue
 
     
-unordered_map<ll, ll> dp;
-ll top_down(ll i, string s)
-{
-    // cout<<"string : "<<s.substr(0, i)<<endl;
-    if(i == 0) return 1;
-    if(i == 1 and s[0] > '0') return 1; else if(i == 1) return 0;
+// unordered_map<ll, ll> dp;
+// ll top_down(ll i, string s)
+// {
+//     // cout<<"string : "<<s.substr(0, i)<<endl;
+//     if(i == 0) return 1;
+//     if(i == 1 and s[0] > '0') return 1; else if(i == 1) return 0;
 
-    if(dp.find(i) != dp.end()) return dp[i];
+//     if(dp.find(i) != dp.end()) return dp[i];
 
-    ll res = 0;
-    string temp = s.substr(i-2, 2);
-    if(stoi(temp) <= 26 and stoi(temp) >= 10) res += top_down(i-2, s);
-    if(s[i-1] != '0')res += top_down(i-1, s); 
-    return dp[i] = res;
-}
-    
+//     ll res = 0;
+//     string temp = s.substr(i-2, 2);
+//     if(stoi(temp) <= 26 and stoi(temp) >= 10) res += top_down(i-2, s);
+//     if(s[i-1] != '0')res += top_down(i-1, s); 
+//     return dp[i] = res;
+// }
+ll bottom_up(string s)
+{   
+    if(s.size() == 0) return 1;
+    vll dp(s.size() + 1, 0);
+    dp[0] = 1;
+    if(s[0] > '0') dp[1] = 1;
+    for(auto i = 2; i <= s.size(); i++)
+    {
+        string temp = s.substr(i-2, 2);
+        if(stoi(temp) >= 10 and stoi(temp) <= 26) dp[i] += dp[i-2];
+        if(s[i-1] != '0') dp[i] += dp[i-1];
+    }
+    return dp[s.size()];
+}    
     int numDecodings(string s) {
-        return (int) top_down(s.size(), s);
+        // return (int) top_down(s.size(), s);
+        return (int) bottom_up(s);
     }
 };
