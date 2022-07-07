@@ -12,7 +12,7 @@ public:
     string get(string key, int timestamp) {
         if(M.find(key) == M.end()) return "";
         auto it = M[key].lower_bound(timestamp);
-        if(it->first == timestamp) return it->second;
+        if((*it).first == timestamp) return (*it).second;
         else{
             // *it = {timestamp, value};
             if(it != M[key].begin()){--it; return (*it).second;}
