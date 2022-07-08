@@ -6,8 +6,8 @@ public:
         {   
             i = max(i, l);
             n = min(n, r+1);
-            if(nums[i] == 0 and i != l){swap(nums[l], nums[i]); l++; i--;}
-            else if(nums[i] == 2 and i != r){swap(nums[i], nums[r]); r--; i--;}
+            if(i > -1 and i < n and nums[i] == 0){swap(nums[l], nums[i]); l++; i--;}
+            else if(i > -1 and i < n and nums[i] == 2){swap(nums[i], nums[r]); r--; i--;}
         }
     }
 };
