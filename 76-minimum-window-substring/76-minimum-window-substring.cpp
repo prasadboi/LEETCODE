@@ -18,18 +18,15 @@ public:
         umap<char, int> sfreq;
         while(l <= r and r < ns)
         {
-            // cout<<"curr substring : l = "<<l<<", r = "<<r<<" -> "<<s.substr(l, r - l + 1)<<endl;
             // if the character is there in tfreq and contributes to the minimum sliding substring
             if(tfreq[s[r]] > 0 and sfreq[s[r]] < tfreq[s[r]]){ctr++;}
             sfreq[s[r]]++;
-            // cout<<"counter = "<<ctr<<endl;
             // if we have come across all the required characters from t
             while(ctr == nt and l <= r)
             {
                 if(ctr == nt)
                 {
                     string str = s.substr(l, r - l + 1);
-                    // cout<<"substr under consideration : "<<str<<endl;
                     if(res != "") 
                     {
                         if(res.size() > str.size()) res = str;
@@ -37,6 +34,7 @@ public:
                     }
                     else res = s.substr(l, r - l + 1);
                 }
+                
                 sfreq[s[l]]--;
                 // if s[l] contributes to the minimum sliding substring
                 if(tfreq[s[l]] > 0 and sfreq[s[l]] < tfreq[s[l]]) ctr--;
