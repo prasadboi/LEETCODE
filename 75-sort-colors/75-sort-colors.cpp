@@ -2,7 +2,6 @@ class Solution {
 public:
     void sortColors(vector<int>& nums) {
         int l = 0, n = nums.size(), r = n-1;
-        if(nums.size() <= 1) return;
         for(int i = 0; i < n; i++)
         {   
             i = max(i, l);
