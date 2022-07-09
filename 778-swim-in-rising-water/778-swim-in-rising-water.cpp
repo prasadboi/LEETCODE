@@ -20,7 +20,7 @@ public:
         return res;
  }
     
-    bool dfs(int T, int n, vvi grid)
+    bool bfs(int T, int n, vvi grid)
     {
         vvi vis(n, vi(n, 0));
         queue<pair<int, int>> q;
@@ -53,7 +53,7 @@ public:
         while(l <= r)
         {
             int m = l + (r-l)/2;
-            if(dfs(m, n, grid)){
+            if(bfs(m, n, grid)){
                 res = m;
                 r = m-1;
             }
