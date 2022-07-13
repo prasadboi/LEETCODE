@@ -4,19 +4,17 @@ public:
         int n = nums.size();
         // find k such that nums[k] < nums[k+1]
         int k = -1;
-        int maxedout = true;
         for(auto i=n-2; i>=0; i--)
-            if(nums[i] < nums[i+1]){k = i; maxedout = false; break;}
-
-        if(maxedout){sort(nums.begin(), nums.end()); return;}
+            if(nums[i] < nums[i+1]){k = i; break;}
         
-        int l = -1;
-        for(int i = k+1; i < n; i++){
-            if(nums[i] > nums[k]) l = i;
+        if(k == -1){reverse(nums.begin(), nums.end()); return;}
+        
+        if(k >= 0){
+            int j = n-1;
+            while(nums[j] <= nums[k]) j--;
+            swap(nums[j], nums[k]);
+            reverse(nums.begin() + k + 1, nums.end());
         }
-        
-        swap(nums[l], nums[k]);
-        reverse(nums.begin() + k + 1, nums.end());
         
     }
 };
