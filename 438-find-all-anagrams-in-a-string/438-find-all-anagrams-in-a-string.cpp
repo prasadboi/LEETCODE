@@ -10,6 +10,8 @@ public:
         while(l <= r and r < n)
         {
             if(--freqp[s[r]] == 0){freqp.erase(s[r]);}
+            // have to check whether key is in map before doing freq[key] < 0
+            // else key gets auto added into the map with val 0
             if(freqp.find(s[r]) != freqp.end() and freqp[s[r]] < 0){
                 while(freqp[s[r]] < 0 and l <= r){freqp[s[l]]++; l++;}
                 if(freqp[s[r]] == 0) freqp.erase(s[r]);
