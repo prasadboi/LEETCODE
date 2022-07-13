@@ -12,24 +12,25 @@ class Solution {
 public:
     ListNode* mergeKLists(vector<ListNode*>& lists) {
         auto cmp = [](ListNode* a, ListNode* b){return a->val > b->val;};
+        
         priority_queue<ListNode*, vector<ListNode*>, decltype(cmp)> q(cmp);
         
-        for(auto l : lists){
-            if(l)  q.push(l);
+        for(ListNode* l : lists){
+            ListNode* iter = l;
+            while(iter != NULL){q.push(iter); iter = iter->next;}
         }
+        cout<<q.size()<<endl;
+        if(q.size() == 0) return NULL;
         
-        if(q.empty())  return NULL;
-
-        ListNode* result = q.top();
+        ListNode* head = q.top(); 
         q.pop();
-        if(result->next) q.push(result->next);
-        ListNode* tail = result;            
-        while(!q.empty()) {
-            tail->next = q.top();
-            q.pop();
+        ListNode* tail = head;
+        while(q.size())
+        {
+            tail->next = q.top(); q.pop();
             tail = tail->next;
-            if(tail->next) q.push(tail->next);
         }
-        return result;
+        tail->next = NULL;
+        return head;
     }
 };
