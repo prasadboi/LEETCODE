@@ -11,24 +11,30 @@
  */
 class Solution {
 public:
+    #define ll long long int
+    #define umap unordered_map
+    #define vi vector<int>
+    #define vll vector<ll>
     
-    int ans;
-    int ctr;
-    bool inorder(TreeNode* root, int k)
+    ll ctr = 0;
+    ll res = 0;
+    ll k = 0; // the kth index
+    // inorder(root) returns whether the kth element has been found or not
+    // once we have reached k we just dont do any update to res. simple
+    bool inorder(TreeNode* root)
     {
         if(root == NULL) return false;
-        if(inorder(root->left, k)) return true;
+        if(inorder(root->left) == true) return true;
         ctr++;
-        // cout<<"at node :"<<root->val<<" with k = "<<k<<endl;
-        if(ctr == k){ans = root->val; return true;}
-        if(inorder(root->right, k)) return true;
+        if(ctr == k){
+            res = root->val; return true;
+        }
+        if(inorder(root->right) == true) return true;
         return false;
     }
-    
-    int kthSmallest(TreeNode* root, int k) {
-        ans = -1;
-        bool flag = inorder(root, k);
-        // cout<<"--------------------------\n";
-        return ans;
+    int kthSmallest(TreeNode* root, int K) {
+        k = K;
+        bool foundKthLargest = inorder(root);
+        if(foundKthLargest) return res; else return -1;
     }
 };
