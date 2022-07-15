@@ -12,7 +12,7 @@ public:
     umap<ll, umap<char, ll>> dp;
     ll dfs(int i, char vowel)
     {
-        if(i == n) return 1;
+        if(i == n-1) return 1;
         if(dp[i][vowel] != 0) return dp[i][vowel];
         ll ans = 0;
         for(auto v : graph[vowel]){
@@ -28,6 +28,6 @@ public:
         graph['i'] = {'a', 'e', 'o', 'u'};
         graph['o'] = {'i', 'u'};
         graph['u'] = {'a'};
-        return (int)dfs(0, '.');
+        return (int)dfs(-1, '.');
     }
 };
