@@ -1,24 +1,26 @@
 class Solution {
 public:
-    #define vi vector<int>
-    #define long long int
+    #define ll long long int
     #define vll vector<ll>
+    #define vi vector<int>
     
     vector<int> dailyTemperatures(vector<int>& temp) {
+        // ans[i] is the number of days you have to wait after the ith day to get a warmer temperature
+        // therefore,
+        // ans[i] = (index of first element larger than i to the right of i) - i; 
         int n = temp.size();
-        vi res(n, 0);
-        stack<int> s;
-        // for every index find the the closest index greater than it
-        for(int i = n-1; i >= 0; i--)
+        vi ans(n, 0);
+        // we can do this using a stack
+        stack<ll> s;
+        // iterating over the array from right to left and updating the largest element encountered yet
+        for(auto i = n-1; i >= 0; i--)
         {
-            while(s.size() and temp[s.top()] <= temp[i])
-            {
-                s.pop();
-            }
-            if(s.size()) res[i] = s.top() - i;
-            else res[i] = 0;
+            // find the first element larger than i to the right of i
+            while(s.size() and temp[s.top()] <= temp[i]) s.pop();
+            if(s.size() == 0) ans[i] = 0;
+            else ans[i] = (int)(s.top() - i);
             s.push(i);
         }
-        return res;
+        return ans;
     }
 };
