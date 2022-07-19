@@ -14,8 +14,8 @@ public:
                 }
                 // pop [ from stack
                 st.pop();
-                int base = 1;
-                int k = 0;
+                
+                int base = 1, k = 0;
                 // get the number k
                 while (!st.empty() && isdigit(st.top())) {
                     k = k + (st.top() - '0') * base;
