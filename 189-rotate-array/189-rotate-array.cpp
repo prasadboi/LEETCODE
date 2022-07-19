@@ -1,3 +1,5 @@
+/*
+// cycle method
 class Solution {
 public:
     void rotate(vector<int>& nums, int k) {
@@ -14,5 +16,20 @@ public:
                 count++;
             }while(start != curr);
         }
+    }
+};
+*/
+
+// reverse array method
+class Solution {
+public:
+    void rotate(vector<int>& nums, int k) {
+        k %= nums.size();
+        // reverse whole array
+        reverse(nums.begin(), nums.end());
+        // reverse first k elements
+        reverse(nums.begin(), nums.begin() + k);
+        // reverse remaining n - k elements
+        reverse(nums.begin() + k, nums.end());
     }
 };
