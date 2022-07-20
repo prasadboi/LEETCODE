@@ -4,9 +4,10 @@ public:
     #define umap unordered_map
     #define uset unordered_set
     int findTheLongestSubstring(string s) {
-        // if the number of characters is odd, increment ctr by 1 else decremetn ctr by 1
         uset<char> vowels = {'a', 'e', 'i', 'o', 'u'};
-        umap<int, int> M; // stores the earliest index with a particular count
+        umap<int, int> M; // stores the earliest index with a particular mask
+        // like 545 (longest substring with equal 0s and 1s) but instead of 2 chars we now deal with multiple(5). 
+        // so we use a mask
         int mask = 0, res = 0;
         M[mask] = -1;
         for(auto i = 0; i < s.size(); i++)
