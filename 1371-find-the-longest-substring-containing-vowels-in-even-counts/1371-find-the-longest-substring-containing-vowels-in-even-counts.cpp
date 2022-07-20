@@ -6,8 +6,8 @@ public:
     int findTheLongestSubstring(string s) {
         uset<char> vowels = {'a', 'e', 'i', 'o', 'u'};
         umap<int, int> M; // stores the earliest index with a particular mask
-        // like 545 (longest substring with equal 0s and 1s) but instead of 2 chars we now deal with multiple(5). 
-        // so we use a mask
+        // in 545 : we need equal numberof 0s and 1s
+        // here : we need EVEN number of vowels of a kind. Therefore we can use a mask
         int mask = 0, res = 0;
         M[mask] = -1;
         for(auto i = 0; i < s.size(); i++)
