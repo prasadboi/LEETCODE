@@ -11,28 +11,26 @@
  */
 class Solution {
 public:
-    #define ull unsigned long long int
+    #define ll long long int
+    #define ull unsigned long long
     int widthOfBinaryTree(TreeNode* root) {
-        if (!root) return 0;
+        if(!root) return 0;
         
         ull res = 0;
         queue<pair<TreeNode*, ull>> q;
-        
         q.push({root, 1});
-        while (!q.empty()) 
-        {
-            ull l = q.front().second;
-            ull r = l, n = q.size();
-            for (ull i = 0; i < n; i++) 
+        while(q.size()){
+            ull k = q.size();
+            ull l = q.front().second, r = q.front().second;
+            for(auto i = 0; i < k; i++)
             {
-                TreeNode* u = q.front().first;
-                r = q.front().second;
+                TreeNode* u = q.front().first; r = q.front().second; 
                 q.pop();
-                if (u->left) q.push({u->left, r * 2});
-                if (u->right) q.push({u->right, r * 2 + 1});
+                if(u->left) q.push({u->left, 2*r});
+                if(u->right) q.push({u->right, 2*r+1});
             }
-            res = max(res, r + 1 - l);
+            res = max(res, (ull)r - l + 1);
         }
-        return res;
+        return (int)res;
     }
 };
