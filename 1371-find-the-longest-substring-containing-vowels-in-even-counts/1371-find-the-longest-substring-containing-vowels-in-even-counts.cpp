@@ -12,7 +12,7 @@ public:
         M[mask] = -1;
         for(auto i = 0; i < s.size(); i++)
         {
-            if(vowels.find(s[i]) != vowels.end()) mask ^= 1<<(s[i] - 'a'); // cant use mask ^= 1<<(s[i] - 'a') as it will go out of bounds
+            if(vowels.find(s[i]) != vowels.end()) mask ^= 1<<(s[i] - 'a');
             if(M.find(mask) != M.end()) res = max(res, i - M[mask]);
             else M[mask] = i;
         }
