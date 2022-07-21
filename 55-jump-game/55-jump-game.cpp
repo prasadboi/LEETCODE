@@ -25,6 +25,7 @@ public:
 
 class Solution {
 public:
+    // the greedy solution is the most optimal one
     #define vb vector<bool>
     #define vi vector<int>
     #define vvi vector<vi>
@@ -36,10 +37,10 @@ public:
         for(int i = 0; i < n; i++){
             jump = max(jump, i + nums[i]);
             // if we reach a point 
-            // where we can jump to the ith step 
+            // where we can jump to the ith step (i != the last step)
             // but dont have enough energy to jump further on then we obv cant move forward. 
             // therefore return false;
-            if(jump == i and i < n-1) return false; 
+            if(jump <= i and i < n-1) return false; 
         }
         return true;
     }
