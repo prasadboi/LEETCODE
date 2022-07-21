@@ -35,7 +35,11 @@ public:
         int jump = 0; // maxindex we can jump to
         for(int i = 0; i < n; i++){
             jump = max(jump, i + nums[i]);
-            if(jump == i and i < n-1) return false;
+            // if we reach a point 
+            // where we can jump to the ith step 
+            // but dont have enough energy to jump further on then we obv cant move forward. 
+            // therefore return false;
+            if(jump == i and i < n-1) return false; 
         }
         return true;
     }
