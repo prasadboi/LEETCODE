@@ -8,12 +8,13 @@ public:
     #define vvi vector<vi>
     #define INF (1e9 +7)
     #define umap unordered_map
+    #define uset unordered_set
     
     vvll graph;
     vll in, out, indegree;
     ll timer = 0;
     vll vis;
-    umap<ll, unordered_set<ll>> ancestors;
+    umap<ll, uset<ll>> ancestors;
     vector<bool> checkIfPrerequisite(int n, vector<vector<int>>& prereqs, vector<vector<int>>& queries) 
     {
         // for each query i have to see if the course b belongs to the subgraph/ subtree of course a
