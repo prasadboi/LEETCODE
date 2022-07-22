@@ -33,56 +33,35 @@ public:
 #define usetii unordered_set<int>
 #define usetll unordered_set<ll>
 
-//     ------------------------------------------------------------------------------------------------------------- 
-    void printMat(vvll mat)
+#define umap unordered_map
+    
+    
+    
+    vvll mat;
+    ll ans = 0;
+    umap<ll, umap<ll, ll>> dp;
+    ll top_down(ll i, ll j)
     {
-        for(auto i : mat){for(auto j : i) cout<<j<<" "; cout<<endl;}
+        if(i == 0 or j == 0) return mat[i][j];
+        if(dp[i][j] != 0) return dp[i][j];
+        ll res = 0;
+        if(mat[i][j])
+            res = 1 + min({top_down(i-1, j-1), top_down(i, j-1), top_down(i-1, j)});
+        else return dp[i][j] = 0;
+        // cout<<"i = "<<i<<", j = "<<j<<", res = "<<res<<endl;
+        return dp[i][j] = res;
     }
-//     -------------------------------------------------------------------------------------------------------------
-//     -------------------------------------------------------------------------------------------------------------
-    vvll dp_mem;
-    ll res;
-    ll top_down(ll i, ll j, vvll &mat){
-        if(i >= mat.size() or j >= mat[0].size()) return 0;
-        if(dp_mem[i][j] > -1) return dp_mem[i][j];
-        if(mat[i][j] == 0) return dp_mem[i][j] = 0;
-        else
-            dp_mem[i][j] = min(min(top_down(i-1, j, mat), top_down(i, j-1, mat)), top_down(i-1, j-1, mat)) + 1;
-        return dp_mem[i][j];
-    }
-//     -------------------------------------------------------------------------------------------------------------
-//     -------------------------------------------------------------------------------------------------------------
-    ll bottom_up(ll m, ll n, vvll &mat)
-    {
-        for(auto i = 0; i < m; i++) {dp_mem[i][0] = mat[i][0];res = max(dp_mem[i][0], res);}
-        for(auto j = 0; j < n; j++) {dp_mem[0][j] = mat[0][j];res = max(dp_mem[0][j], res);}
-
-        for(auto i = 1; i < m; i++){
-            for(auto j = 1; j < n; j++){
-                if(mat[i][j] == 1) dp_mem[i][j] = min({dp_mem[i-1][j], dp_mem[i-1][j-1], dp_mem[i][j-1]}) + 1;
-                else dp_mem[i][j] = 0;
-                res = max(res, dp_mem[i][j]);
-            }
-        }
-        return res;
-    }
-//     -------------------------------------------------------------------------------------------------------------
-//     -------------------------------------------------------------------------------------------------------------
+    
     int maximalSquare(vector<vector<char>>& matrix) {
-        ll m = matrix.size();
-        if(m == 0) return 0;
-        ll n = matrix[0].size();
+        int n = matrix.size(), m = matrix[0].size();
+        mat.resize(n, vll (m, 0));
+        for(auto i = 0; i < n; i++)
+            for(auto j = 0; j < m; j++)
+                mat[i][j] = matrix[i][j] - '0', ans = max(ans, mat[i][j]);
         
-        res = 0;
-        vvll mat(m, vll (n, 0));
-        dp_mem.resize(m, vll(n, -1));
-        
-        for(auto i = 0; i < m; i++) for(auto j = 0; j < n; j++) mat[i][j] = matrix[i][j] - '0';
-        
-        // for(auto i = 0; i < m; i++) for(auto j = 0; j < n; j++) res = max(res, top_down(i, j, mat));
-        res = max(res, bottom_up(m, n, mat));
-        return (int) res*res;
+        for(auto i = 0; i < n; i++)
+            for(auto j = 0; j < m; j++)
+                ans = max(ans, top_down(i, j));
+        return ans*ans;
     }
-//     -------------------------------------------------------------------------------------------------------------
-//     -------------------------------------------------------------------------------------------------------------
 };
