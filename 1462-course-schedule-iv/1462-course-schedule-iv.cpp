@@ -11,14 +11,12 @@ public:
     #define uset unordered_set
     
     vvll graph;
-    vll in, out, indegree;
-    ll timer = 0;
-    vll vis;
+    vll indegree;
     umap<ll, uset<ll>> ancestors;
     vector<bool> checkIfPrerequisite(int n, vector<vector<int>>& prereqs, vector<vector<int>>& queries) 
     {
-        // for each query i have to see if the course b belongs to the subgraph/ subtree of course a
-        graph.resize(n); vis.resize(n, false); in.resize(n, 0); out.resize(n, 0), indegree.resize(n, 0);
+        // for each query i have to see if the course a is an ancestor of course b
+        graph.resize(n); indegree.resize(n, 0);
         for(auto i : prereqs){
             graph[i[0]].push_back(i[1]); 
             indegree[i[1]]++;
