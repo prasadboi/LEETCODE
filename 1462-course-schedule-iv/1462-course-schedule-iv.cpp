@@ -1,47 +1,46 @@
 class Solution {
 public:
-    #define vb vector<bool>
-    #define vi vector<int>
     #define ll long long int
     #define vll vector<ll>
-    #define vvll vector<vector<ll>>
+    #define vvll vector<vll>
+    #define vb vector<bool>
+    #define vi vector<int>
+    #define vvi vector<vi>
+    #define INF (1e9 +7)
+    #define umap unordered_map
     
-    bool helper(ll src, ll dest, vvll &graph)
+    vvll graph;
+    vll in, out, indegree;
+    ll timer = 0;
+    vll vis;
+    umap<ll, unordered_set<ll>> ancestors;
+    vector<bool> checkIfPrerequisite(int n, vector<vector<int>>& prereqs, vector<vector<int>>& queries) 
     {
-        queue<ll> q;
-        q.push(src);
-        vb vis(graph.size(), false);
-        while(!q.empty())
-        {
-            ll v = q.front();
-            q.pop();
-            for(auto u : graph[v])
-            {
-                if(!vis[u]){
-                    vis[u] = true;
-                    q.push(u);
-                    if(u == dest) {return true;}
-                }
-            }
-        }
-        return false;
-    }
-    
-    vector<bool> checkIfPrerequisite(int numCourses, vector<vector<int>>& prerequisites, vector<vector<int>>& queries) {
-        int t = queries.size();
-//         making graph
-        int n = numCourses;
-        vvll graph(n);
-        for(auto i : prerequisites)
-        {
-            graph[i[0]].push_back(i[1]);
+        // for each query i have to see if the course b belongs to the subgraph/ subtree of course a
+        graph.resize(n); vis.resize(n, false); in.resize(n, 0); out.resize(n, 0), indegree.resize(n, 0);
+        for(auto i : prereqs){
+            graph[i[0]].push_back(i[1]); 
+            indegree[i[1]]++;
         }
         
-        cout<<t<<endl;
-        vb res;
-        for(auto i : queries)
+        queue<ll> q;
+        for(auto i = 0; i < n; i++) if(indegree[i] == 0) q.push(i);
+        while(!q.empty())
         {
-            res.push_back(helper(i[0], i[1], graph));
+            ll u = q.front(); q.pop();
+            for(auto v : graph[u])
+            {
+                ancestors[v].insert(u);
+                for(auto i : ancestors[u]) ancestors[v].insert(i);
+                if(--indegree[v] == 0) q.push(v);
+            }
+        }
+        
+        vb res;
+        for(auto q : queries){
+            ll u = q[0], v = q[1];
+            if(ancestors[v].find(u) != ancestors[v].end()) res.push_back(true);
+            else res.push_back(false);
         }
         return res;
     }
