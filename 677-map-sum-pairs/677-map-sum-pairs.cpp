@@ -11,7 +11,7 @@ public:
         node():isWord(false){}
     };
     
-    map<string, ll> M;
+    umap<string, ll> M;
     node* root;
     MapSum() {
         root = new node();
