@@ -1,5 +1,6 @@
 /*
 
+    // OPTIMAL (for the O(n^2) time complexity solution)
     makePalindrome(string s) {
      
         int l = 0;
@@ -42,6 +43,7 @@
 
 class Solution {
 public:
+    // MY solution. SUB - OPTIMAL
     int minMovesToMakePalindrome(string s) {
         int l = 0, n = s.size(), r = n-1;
         int swaps = 0;
