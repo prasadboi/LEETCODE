@@ -3,6 +3,7 @@ public:
     #define vi vector<int>
     #define vll vector<ll>
     #define umap unordered_map
+    /*
     
     int minDeletions(string s) {
         stack<int> availFreqs;
@@ -26,6 +27,26 @@ public:
             }
         }
         
+        return res;
+    }
+    
+    */
+    
+    
+    int minDeletions(string s) {
+        // using priority queue
+        priority_queue<int> freq;
+        umap<char, int> f;
+        for(auto i : s) f[i]++;
+        for(auto i : f) freq.push(i.second);
+        
+        int res = 0;
+        while(freq.size() >= 2)
+        {
+            int a = freq.top(); freq.pop();
+            int b = freq.top();
+            if(a == b){res++, a--; if(a > 0) freq.push(a);}
+        }
         return res;
     }
 };
