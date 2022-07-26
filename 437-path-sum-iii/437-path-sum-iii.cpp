@@ -9,34 +9,26 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+#define ll long long int 
 class Solution {
 public:
-    #define ll long long int
-    int ctr;
-    
-    int FindAll(TreeNode* i, ll target)
+    ll dfs1(TreeNode* root, ll target)
     {
-        if(!i) return 0;
-        target -= i->val;
-        int ans = 0;
-        if(target == 0) ans++;
-        ans += FindAll(i->left, target);
-        ans += FindAll(i->right, target);
-        return ans;
+        if(root == NULL) return 0;
+        target -= root->val;
+        // cout<<"at node : "<<root->val<<",  the updated target val is : "<<target<<endl;
+        return dfs1(root->left, target) + dfs1(root->right, target) + (int)(target == 0);
     }
     
-    void preorder(TreeNode* i, ll target)
+    ll dfs2(TreeNode* root, ll target)
     {
-        if(i == NULL) return;
-        preorder(i->left, target);
-        preorder(i->right, target);
-        ctr += FindAll(i, target);
+        if(root == NULL) return 0;
+        ll res = 0;
+        res += dfs1(root, target);
+        return res + dfs2(root->left, target) + dfs2(root->right, target);
     }
     
-    int pathSum(TreeNode* root, int targetSum) 
-    {
-        ctr = 0;
-        preorder(root, targetSum);
-        return ctr;
+    int pathSum(TreeNode* root, int target) {
+        return (int)dfs2(root, (ll)target);
     }
 };
