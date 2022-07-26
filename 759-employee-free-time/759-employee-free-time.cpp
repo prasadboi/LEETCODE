@@ -13,7 +13,7 @@ public:
     }
 };
 
-
+// TLE
 class Solution {
 public:
     #define ll long long int
@@ -66,7 +66,9 @@ public:
 
 
 */
-
+// you can put the first element of each of the k employees and keep on adding
+// the free time is when between 2 consecutive work intervals of any employee there is a gap > 1 unit
+// keep on updating the heap as and when you finish up a interval, add the next inrterval of that employee
 class Solution {
 public:
     #define ll long long int
