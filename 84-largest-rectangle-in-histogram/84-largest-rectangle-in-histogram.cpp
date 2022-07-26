@@ -17,10 +17,10 @@ public:
             }
             s.push(i);
         }
-        // once you have done this much now you only have all the in the stack in 
-        // sorted order such that each element in stack is smaller than all the 
-        // elements on its left 
         // (H[s.top()] = max, H[s.bottom()] = min)
+        // all the elements to right of s.top and all the elements between s.top() and s.2ndtop()
+        // would be greater than H[s.top()]
+        // hence height = H[s.top()], and width  = n - s.2ndtop() - 1;
         while(s.top() != -1)
         {
             int h = heights[s.top()];
