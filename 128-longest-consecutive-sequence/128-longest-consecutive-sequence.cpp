@@ -1,17 +1,17 @@
 class Solution {
 public:
+    #define uset unordered_set
+    
     int longestConsecutive(vector<int>& nums) {
-        if(nums.size() <= 1) return nums.size();
-        int n = nums.size();
-        sort(nums.begin(), nums.end());
-        // for(auto i : nums) cout<<i<<" "; cout<<endl;
-        int ctr = 1, res = 1;
-        for(int i = 1; i < n; i++){
-            if(nums[i] == nums[i-1]) continue;
-            else if(nums[i] > nums[i-1] + 1) ctr = 1;
-            else ctr++;
-            // cout<<"ctr : "<<ctr<<endl;
-            res = max(res, ctr);
+        uset<int> s(nums.begin(), nums.end());
+        if(s.size() <= 0) return 0;
+        int res = 1;
+        for(auto& i : s)
+        {
+            int curr_len = 1;
+            for(int j = i; s.count(j-1); j--) {s.erase(j-1); curr_len++;}
+            for(int j = i; s.count(j+1); j++) {s.erase(j+1); curr_len++;}
+            res = max(res, curr_len);
         }
         return res;
     }
