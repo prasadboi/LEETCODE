@@ -30,8 +30,9 @@ public:
         while(!q.empty())
         {
             pair<int, int> u = q.front(); q.pop();
-            if(grid[u.first][u.second] <= T)
+            if(grid[u.first][u.second] <= T) // if it is possible to swip on top of that grid block
             {
+                // target destination
                 if(u.first == n-1 and u.second == n-1) return true;
                 
                 for(auto v : get_nghbrs(u, n))
