@@ -1,145 +1,42 @@
 class Solution {
 public:
-#define ll long long
-
-#define vi vector<int>
-#define vll vector<ll>
-#define vvi vector<vi>
-#define vvll vector<vll>
-#define vpll vector<pair<ll, ll>>
-#define vvpll vector<vpll>
-#define vstr vector<string>
-#define vchr vector<char>
-#define vb vector<bool>
-#define vvb vector<vb>
-
-#define pii pair<int, int>
-#define pll pair<ll, ll>
-
-#define umapii unordered_map<int, int>
-#define umapll unordered_map<ll, ll>
-#define umapis unordered_map<int, string>
-#define umapchr unordered_map<char, int>
-#define umapss unordered_map<string, string>
-
-#define mapii map<int, int>
-#define mapll map<ll, ll>
-#define mapsi map<string, int>
-#define mapsll map<string, ll>
-#define mapci map<char, int>
-#define mapcl map<char, ll>
-#define mapss map<string, string>
-
-#define usetii unordered_set<int>
-#define usetll unordered_set<ll>
-
-#define pq priority_queue
-
-// to be solved using DSU
-// return the total number of provinces (i.e. connected components)
-string original, res;
-class DSU
-{
-private:
-    vll rank;
-    ll count;
-
-public:
-    vll parent;
-    DSU(int n) : parent(n), rank(n)
-    {
-        for (int i = 0; i < n; i++)
-            parent[i] = i, rank[i] = 1;
-        count = n;
-    }
-
-    ll Find(int u)
-    {
-        if (u == parent[u])
-            return u;
-        return parent[u] = Find(parent[u]);
-    }
-
-    void Union(int u, int v)
-    {
-        ll root_u = Find(u), root_v = Find(v);
-        if (root_u != root_v)
-        {
-            if (rank[root_u] > rank[root_v]) parent[root_v] = root_u;
-            else if(rank[root_u] < rank[root_v]) parent[root_u] = root_v;
-            else{
-                parent[root_v] = root_u, rank[root_u]++;
-            }
-            count--;
-        }
+    #define ll long long int
+    #define vll vector<ll>
+    #define vvll vector<vll>
+    #define umap unordered_map
+    #define vb vector<bool>
+    
+    umap<ll, vll> graph; umap<ll, ll> vis;
+    void dfs(ll u, string &component, vll &comp_indices, string &s){
+        vis[u] = 1;
+        comp_indices.push_back(u);
+        component.push_back(s[u]);
+        for(auto v : graph[u])
+            if(vis[v] == 0) dfs(v, component, comp_indices, s);
     }
     
-    bool connected(int u, int v)
-    {
-        return Find(u) == Find(v);
-    }
-
-    ll get_count(){return count;}
     
-};
-
-
-//     -----------------------------------------------------------------------
     string smallestStringWithSwaps(string s, vector<vector<int>>& pairs) {
-        int n = s.size();
-        string res(n, '$');
-        DSU dsu(n);
+        // there exists only one lexicographically smallest ordering for a connected set of pairs
         for(auto i : pairs){
-            dsu.Union(i[0], i[1]);
-        }
-        unordered_map<int, string> m;
-        for(int i = 0; i < n; i++)
-        {
-            // cout<<"at position i = "<<i<<"belongs to set"<<dsu.Find(i)<<"orig char is"<<s[i]<<endl;
-            m[dsu.Find(i)] += s[i];
+            graph[i[0]].push_back(i[1]);
+            graph[i[1]].push_back(i[0]);
         }
         
-        for(auto i = m.begin(); i != m.end(); i++)
+        string res = s;
+        for(auto i : graph)
         {
-            int x = i->first;
-            string str = i->second;
-            sort(i->second.begin(), i->second.end());
-        }
-    
-        for(int i = 0; i < n; i++)
-        {
-            
-            // cout<<"at position i = "<<i<<"belongs to set"<<dsu.Find(i)<<"string is :"<<m[dsu.Find(i)]<<endl;
-            res[i] = m[dsu.Find(i)][0];
-            m[dsu.Find(i)].erase(m[dsu.Find(i)].begin());
-            
+            ll u = i.first;
+            string component;
+            vll comp_indices;
+            if(vis[u] == 0){
+                dfs(u, component, comp_indices, s);
+                sort(component.begin(), component.end());
+                sort(comp_indices.begin(), comp_indices.end());
+                for(auto j = 0; j < component.size(); j++)
+                    res[comp_indices[j]] = component[j];
+            }
         }
         return res;
     }
-//     -----------------------------------------------------------------------
-
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
