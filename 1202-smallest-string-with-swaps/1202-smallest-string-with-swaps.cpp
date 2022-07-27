@@ -23,7 +23,6 @@ public:
             graph[i[1]].push_back(i[0]);
         }
         
-        string res = s;
         for(auto i : graph)
         {
             ll u = i.first;
@@ -34,9 +33,9 @@ public:
                 sort(component.begin(), component.end());
                 sort(comp_indices.begin(), comp_indices.end());
                 for(auto j = 0; j < component.size(); j++)
-                    res[comp_indices[j]] = component[j];
+                    s[comp_indices[j]] = component[j];
             }
         }
-        return res;
+        return s;
     }
 };
