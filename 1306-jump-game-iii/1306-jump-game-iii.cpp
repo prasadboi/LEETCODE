@@ -8,7 +8,6 @@ public:
     #define vi vector<int>
     #define vb vector<bool>
     vvll graph;
-    vll indegree;
     bool bfs(ll start, vi &arr)
     {
         ll n = graph.size();
@@ -30,11 +29,10 @@ public:
     bool canReach(vector<int>& arr, int start) {
         ll n = arr.size();
         graph.resize(n);
-        indegree.resize(n, 0);
         for(auto i = 0; i < n; i++)
         {
-            if(arr[i] + i < n){graph[i].push_back(arr[i] + i); indegree[arr[i]  +i]++;}
-            if(i - arr[i] > -1){graph[i].push_back(i - arr[i]); indegree[i - arr[i]]++;}
+            if(arr[i] + i < n){graph[i].push_back(arr[i] + i);}
+            if(i - arr[i] > -1){graph[i].push_back(i - arr[i]);}
         }
         return bfs(start, arr);
     }
