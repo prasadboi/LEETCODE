@@ -34,6 +34,7 @@ public:
     #define umap unordered_map
     int findMaxLength(vector<int>& nums) {
         umap<int, int> count; // a hashmap that stores the count (1s - 0s)
+        // peaks and valley problem bolte
         int ctr = 0, res = 0;
         for(auto i = 0; i < nums.size(); i++)
         {
