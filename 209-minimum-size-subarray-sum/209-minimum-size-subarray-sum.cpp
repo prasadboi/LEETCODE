@@ -24,6 +24,8 @@ public:
             }
             prefix[sum] = i;
         }
+        
+        // can also do 2 pointer approach on the prefix array. O(n) time. Best Solution
         return (res == INT_MAX) ? 0 : res;
     }
 };
