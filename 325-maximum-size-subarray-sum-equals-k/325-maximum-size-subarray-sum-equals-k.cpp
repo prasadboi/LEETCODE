@@ -13,7 +13,7 @@ public:
                 // cout<<"i = "<<i<<", sum = "<<sum<<endl;
                 res = max(res, (ll)i + 1);
             }
-            else if(prefix.find(sum - k) != prefix.end()) {
+            else if(prefix.count(sum - k) > 0) {
                 // cout<<"i = "<<i<<", sum = "<<sum<<", sum - k at : "<<prefix[sum-k]<<endl;
                 res = max(res, (ll)i - prefix[sum-k]);
             }
