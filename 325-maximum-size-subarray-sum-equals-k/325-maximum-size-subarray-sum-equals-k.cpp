@@ -5,6 +5,7 @@ public:
     int maxSubArrayLen(vector<int>& nums, int k) {
         umap<ll, ll> prefix;
         ll sum = 0, res = 0;
+        
         for(int i = 0; i < nums.size(); i++)
         {
             sum += nums[i];
@@ -17,7 +18,7 @@ public:
                 // cout<<"i = "<<i<<", sum = "<<sum<<", sum - k at : "<<prefix[sum-k]<<endl;
                 res = max(res, (ll)i - prefix[sum-k]);
             }
-            if(prefix.find(sum) == prefix.end()) {
+            if(prefix.count(sum) <= 0) {
                 // cout<<"i = "<<i<<", new sum = "<<sum<<endl;
                 prefix[sum]=  i;
             }
