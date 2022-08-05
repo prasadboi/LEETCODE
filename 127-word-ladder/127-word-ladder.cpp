@@ -1,47 +1,54 @@
 class Solution {
 public:
-    #define vstr vector<string> 
-    #define vi vector<int>
-    #define umapss unordered_map<string, string>
-    #define umapsb unordered_map<string, bool>
-    #define umapsi unordered_map<string, int>
-    vstr nextNode(string word)
+    #define ll long long int
+    #define vstr vector<string>
+    #define sstr set<string>
+    #define vb vector<bool>
+    #define umap unordered_map
+    #define uset unordered_set
+    
+    sstr wordListDict;
+    
+    vstr nextNode(string s)
     {
+        // generate all possible next substrings
         vstr res;
-        for(int i = 0; i < word.size(); i++)
+        for(auto i = 0; i < s.size(); i++)
         {
-            for(int ch = 'a'; ch < 'z' + 1; ch++)
+            for(char j = 'a'; j <= 'z'; j++)
             {
-                string temp = word;
-                temp[i] = ch; 
-                res.push_back(temp);
+                char x = s[i];    
+                s[i] = j;
+                if(wordListDict.count(s) > 0 and j != x)
+                    res.push_back(s);
+                s[i] = x;
             }
         }
         return res;
     }
-    
-    
-    int ladderLength(string beginWord, string endWord, vector<string>& wordList) 
-    {
-        set<string> words;
-        for(auto i : wordList) words.insert(i);
-        
-        queue<string> q;
-        umapsb vis;
-        umapsi dist;
-        q.push(beginWord);
-        vis[beginWord] = true;
-        while(!q.empty()){
-            string u = q.front(); q.pop();
-            // cout<<"at node : "<<u<<"| at dist : "<<dist[u]<<endl;
-            if(u == endWord) return dist[u]+1;
 
-            for(auto i : nextNode(u)){
-                if((vis.find(i) == vis.end() or vis[i] == false) and (words.find(i) != words.end())){
-                    vis[i] = true;
-                    q.push(i);
-                    dist[i] = dist[u] + 1;
-                }
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        // put all the words of wordlist in a dictionary
+        
+        for(auto i : wordList) wordListDict.insert(i);
+        
+        // run bfs
+        queue<string> q;
+        map<string, ll> dist;
+        map<string, bool> vis;
+        
+        q.push(beginWord);
+        while(!q.empty())
+        {
+            string w = q.front(); q.pop();
+            if(w == endWord) return dist[endWord]+1;
+            for(auto i : nextNode(w))
+            {
+                // cout<<"w : "<<w<<", i : "<<i<<endl;
+                if(vis[i] == true) continue;
+                vis[i] = true;
+                dist[i] = dist[w] + 1;
+                q.push(i);
             }
         }
         return 0;
