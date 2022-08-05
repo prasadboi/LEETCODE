@@ -12,20 +12,7 @@ public:
     vvll vis;
     vvll grid;
     ll m, n;
-    void printG()
-    {
-        for(auto i : grid){
-            for(auto j : i) cout<<j<<" ";
-            cout<<endl;
-        }
-    }
-    void printVis()
-    {
-        for(auto i : vis){
-            for(auto j : i) cout<<j<<" ";
-            cout<<endl;
-        }
-    }
+    
     
     vpll nextCoord(ll x, ll y)
     {
