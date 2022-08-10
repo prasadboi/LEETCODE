@@ -19,9 +19,9 @@ public:
         {
             end = minheap.top()[1];
             // cout<<"end = "<<end<<", i[0] = "<<i[0]<<", i[1] = "<<i[1]<<endl;
-            if(end > i[0]) rooms++;
-            else minheap.pop();
-            minheap.push(i);
+            if(end > i[0]) rooms++; // no free rooms from earlier available
+            else minheap.pop(); // a room has freed up and we can use that
+            minheap.push(i); // inserting the new end time till which this room will be occupied
         }
         return rooms;
     }
