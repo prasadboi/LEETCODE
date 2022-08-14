@@ -10,7 +10,6 @@ public:
         
         vector<ll> stTimes;
         for(auto i = 0; i < events.size(); i++) stTimes.push_back(events[i][0]);
-        sort(stTimes.begin(), stTimes.end());
         
         ll n = events.size();
         vector<vector<ll>> dp(n+1, vector<ll> (k+1, 0));
