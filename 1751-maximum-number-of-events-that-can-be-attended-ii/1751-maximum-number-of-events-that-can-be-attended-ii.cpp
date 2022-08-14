@@ -18,10 +18,12 @@ public:
         {
             for(auto j = k-1; j >= 0; j--)
             {
+                // I pick the element
                 ll res1 = events[i][2];
                 auto it = upper_bound(stTimes.begin(), stTimes.end(), events[i][1]);
                 if(it != stTimes.end()) res1 += dp[(it - stTimes.begin())][j+1];
                 
+                // I dont pick the element
                 ll res2 = dp[i+1][j];
                 
                 dp[i][j] = max(res1, res2);
