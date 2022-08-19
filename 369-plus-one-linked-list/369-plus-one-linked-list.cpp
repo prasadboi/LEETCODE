@@ -35,6 +35,7 @@ public:
             iter->val = iter->val%10;
             prev = iter;
             iter = iter->next;
+            if(c == 0) break;
         }
         if(c == 1) prev->next = new ListNode(c);
         return reverse(head);
