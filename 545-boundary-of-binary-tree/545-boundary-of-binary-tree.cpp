@@ -66,10 +66,12 @@ public:
         dfs(root);
         if(LB.size() and LB.back() == leaves.front()) leaves.erase(leaves.begin());
         if(RB.size() and RB.back() == leaves.back()) leaves.pop_back();
+        
         reverse(RB.begin(), RB.end());
-        for(auto i : LB){cout<<"l-i->val"<<i->val<<" "; res.push_back(i->val);} cout<<endl;
-        for(auto i : leaves) {cout<<"leaf-i->val"<<i->val<<" ";res.push_back(i->val);} cout<<endl;
-        for(auto i : RB) {cout<<"R-i->val"<<i->val<<" ";res.push_back(i->val);} cout<<endl;
+        for(auto i : LB){res.push_back(i->val);}
+        for(auto i : leaves) {res.push_back(i->val);}
+        for(auto i : RB) {res.push_back(i->val);}
+            
         return res;
     }
 };
