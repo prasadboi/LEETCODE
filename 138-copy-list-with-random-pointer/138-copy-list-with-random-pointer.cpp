@@ -13,6 +13,8 @@ public:
     }
 };
 */
+/*
+// using O(n) space
 #define umap unordered_map
 #define ll long long int
 #define vll vector<ll>
@@ -32,5 +34,51 @@ public:
         }
         newNode->next = copyRandomList(head->next);
         return newNode;
+    }
+
+*/
+
+
+class Solution {
+#define umap unordered_map
+#define ll long long int
+#define vll vector<ll>
+public:
+    Node* copyRandomList(Node* head) {
+        // make the head point to the new node and store the next elsewhere
+        if(head == NULL) return NULL;
+        Node* iter = head, *real_next = NULL;
+        while(iter)
+        {
+            real_next = iter->next;
+            
+            Node* newNode = new Node(iter->val);
+            newNode->random = iter->random;
+            newNode->next = iter->next;
+            
+            iter->next = newNode;
+            iter = real_next;
+        }
+         Node* hcpy = head->next, *i = NULL, *j = NULL;
+        for(i = head->next; i != NULL and i->next != NULL; i = i->next->next){
+            if(i->random) i->random = i->random->next;
+        }
+        if(i and i->random) i->random = i->random->next;
+
+        
+        for(i = head, j = head->next; j and j->next;)
+        {
+            Node* nxt = j->next;
+            j->next = nxt->next;
+            i->next = nxt;
+        
+            i = i->next, j = j->next;
+        }
+        i->next = NULL;
+        
+        for(auto i = head; i != NULL; i = i->next){
+            cout<<i->val<<" ";
+        }
+        return hcpy;
     }
 };
