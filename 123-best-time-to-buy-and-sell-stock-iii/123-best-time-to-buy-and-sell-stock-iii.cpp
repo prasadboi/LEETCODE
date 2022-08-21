@@ -30,6 +30,7 @@ public:
     {
         ll n = prices.size();
         vector<vvll> dp(n+1, vvll(3, vll(2, -1)));
+        // base cases
         for(auto i = 0; i < 3; i++) for(auto j = 0; j < 2; j++) dp[n][i][j] = 0;
         for(auto i = 0; i <= n; i++) for(auto k = 0; k < 2; k++) dp[i][0][k] = 0;
         
