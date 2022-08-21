@@ -5,7 +5,7 @@ public:
         dp[0] = 0;
         for(auto i = 0; i < nums.size()-1; i++)
         {
-            for(auto j = 1; j <= nums[i]; j++){
+            for(auto j = 0; j <= nums[i]; j++){
                 if(i + j < nums.size()) dp[i+j] = min(dp[i+j], dp[i] + 1);
             }
         }
