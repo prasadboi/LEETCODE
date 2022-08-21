@@ -59,26 +59,23 @@ public:
             iter->next = newNode;
             iter = real_next;
         }
-         Node* hcpy = head->next, *i = NULL, *j = NULL;
+        
+        // make the radomn pointers point to the new nodes
+        Node* hcpy = head->next, *i = NULL, *j = NULL;
         for(i = head->next; i != NULL and i->next != NULL; i = i->next->next){
             if(i->random) i->random = i->random->next;
         }
         if(i and i->random) i->random = i->random->next;
-
-        
+            
+        // restore the original list and connect the new nodes        
         for(i = head, j = head->next; j and j->next;)
         {
             Node* nxt = j->next;
             j->next = nxt->next;
             i->next = nxt;
-        
             i = i->next, j = j->next;
         }
         i->next = NULL;
-        
-        for(auto i = head; i != NULL; i = i->next){
-            cout<<i->val<<" ";
-        }
         return hcpy;
     }
 };
