@@ -12,7 +12,7 @@ public:
         
         ll ctr = 0;
         queue<ll> q; q.push(0);
-        vector<ll> vis(n, 0);
+        vector<ll> vis(n, 0); vis[0] = 1;
         while(!q.empty())
         {
             ll k = q.size();
