@@ -14,6 +14,7 @@ public:
     //     return dp[nums.size()-1];
     // }
     
+    // could be interpreted as a bfs problem !
     int jump(vector<int>& nums) {
         int maxReachable = 0, i = 0, lastPos = 0, ctr = 0;
         for(; i < nums.size()-1; i++)
