@@ -14,6 +14,8 @@ public:
     {   
         vector<pair<char, vll>> freq_table(26);
         for(auto i = 'A'; i <= 'Z'; i++) freq_table[i - 'A'].first = i;
+        
+        
         for(auto voter_ordering : votes){
             
             for(auto i = 0; i < voter_ordering.size(); i++)
@@ -27,23 +29,21 @@ public:
         
         
         for(auto i = freq_table.begin(); i != freq_table.end(); i++) sort(i->second.begin(), i->second.end());
-        // for(auto i : freq_table){
-            // cout<<i.first<<" : ";
-            // for(auto j : i.second) cout<<j<<" ";
-            // cout<<endl;
-        // }
         
-        // compute the final ordering
+        // compute the final ordering of the teams
         auto cmp = [](pair<char, vll> &a, pair<char, vll> &b){
             if(a.second != b.second) return a.second < b.second;
             else return a.first < b.first;
         };
         sort(freq_table.begin(), freq_table.end(), cmp);
+        
+        // get the resultant string
         string res = "";
         for(auto i : freq_table) if(i.second.size() > 0) res.push_back(i.first);
         return res;
-        
     }
+
+    // driver function
     string rankTeams(vector<string>& votes) {
         return solve(votes);
     }
