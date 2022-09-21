@@ -8,7 +8,7 @@ public:
     
     
     vector<int> findingUsersActiveMinutes(vector<vector<int>>& logs, int k) {
-        umap<ll, uset<ll>> UAM;
+        umap<ll, set<ll>> UAM;
         for(auto i = 0; i < logs.size(); i++)
             UAM[logs[i][0]].insert(logs[i][1]);
         
