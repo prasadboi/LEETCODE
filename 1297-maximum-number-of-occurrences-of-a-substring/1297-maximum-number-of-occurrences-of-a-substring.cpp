@@ -10,6 +10,9 @@ public:
         // max unique letters  = maxLetters
         // minSize = minSize
         // maxSize = maxSize
+        
+        // key idea : the most frequent string will always be of size minSize
+        // reason : if there exists a string of maxFreq with size larger than the minSize, then there will always be any substring of size == minSize with the same frequency :0
         umap<char, int> letters;
         map<string, int> string_freq;
         int res = 0;
